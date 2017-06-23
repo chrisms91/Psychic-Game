@@ -1,6 +1,7 @@
 var winDisplay = document.querySelector("#winDisplay");
 var loseDisplay = document.querySelector("#loseDisplay");
 var numGuessDisplay = document.querySelector("#numGuessDisplay");
+var guessListDisplay = document.querySelector("#guessListDisplay");
 
 var numWin = 0;
 var numLose = 0;
@@ -15,38 +16,55 @@ var computerChoices = alpha.split("");
 var computerGuess = pickLetter();
 
 document.onkeyup = function(event) {
-  
-  var userGuess = event.key;
 
-  // Alerts the key the user pressed (userGuess).
-  console.log("User guess: " + userGuess);
-  // Alerts the Computer's guess.
-  console.log("Computer guess: " + computerGuess);
+var userGuess = event.key;
 
-  if(isLetter(userGuess)){
+// Alerts the key the user pressed (userGuess).
+console.log("User guess: " + userGuess);
+// Alerts the Computer's guess.
+console.log("Computer guess: " + computerGuess);
 
+// if user types lowercase letter
+if(isLetter(userGuess)){
 
-  	if(userGuess.match(computerGuess)){
+	//insert user input into array and display array
+	insert(userGuess);
 
-  		//increment numWin
-  		++numWin;
+	//decrement numGuessLeft
+	--numGuessLeft;
 
-  		//update winDisplay
-  		winDisplay.textContent = numWin;
+	//update numGuessLeft
+	numGuessDisplay.textContent = numGuessLeft;
 
-  		//pick different letter randomly
-  		computerGuess = pickLetter();
+	if(userGuess.match(computerGuess)){
 
-  	} else {
-  		++numLose;
-  		loseDisplay.textContent = numLose;
-  	}
-  	
-  } else {
-  	
-  }
+		//increment numWin
+		++numWin;
+
+		//update winDisplay
+		winDisplay.textContent = numWin;
+
+		//pick different letter randomly
+		computerGuess = pickLetter();
+
+		reset();
+	}
+
+	if(numGuessLeft === 0){
+	  ++numLose;
+	  loseDisplay.textContent = numLose;
+
+	  reset();
+	}
+
+} else {
+	console.log("please type only lowercase letters!");
+}
 
 };
+
+
+
 
 
 // validate user input (only lowercase letters)
@@ -54,8 +72,7 @@ function isLetter(userGuess) {
    var letters = /^[a-z]+$/;  
    if(userGuess.match(letters)){  
     return true;  
-   } else {  
-     console.log("please type only lowercase letters!");  
+   } else {    
      return false;
    }  
 }  
@@ -65,3 +82,27 @@ function pickLetter(){
 	var computerGuess = computerChoices[randNum];
 	return computerGuess;
 }
+
+function insert(userGuess){
+	guessList.push(userGuess);
+
+	display();
+}
+
+function display(){
+	guessListDisplay.textContent = guessList.join(", ");
+}
+
+function reset(){
+	numGuessLeft = 9;
+  numGuessDisplay.textContent = numGuessLeft;
+  guessList = [];
+  guessListDisplay.textContent = "";
+}
+
+
+
+
+
+
+
