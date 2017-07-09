@@ -24,42 +24,43 @@ console.log("User guess: " + userGuess);
 // Alerts the Computer's guess.
 console.log("Computer guess: " + computerGuess);
 
-// if user types lowercase letter
-if(isLetter(userGuess)){
+	// if user types lowercase letter
+	if(isLetter(userGuess)){
 
-	//insert user input into array and display array
-	insert(userGuess);
+		//insert user input into array and display array
+		insert(userGuess);
 
-	//decrement numGuessLeft
-	--numGuessLeft;
+		//decrement numGuessLeft
+		--numGuessLeft;
 
-	//update numGuessLeft
-	numGuessDisplay.textContent = numGuessLeft;
+		//update numGuessLeft
+		numGuessDisplay.textContent = numGuessLeft;
 
-	if(userGuess.match(computerGuess)){
+		//when user inputs correct letter
+		if(userGuess.match(computerGuess)){
 
-		//increment numWin
-		++numWin;
+			//increment numWin
+			++numWin;
 
-		//update winDisplay
-		winDisplay.textContent = numWin;
+			//update winDisplay
+			winDisplay.textContent = numWin;
 
-		//pick different letter randomly
-		computerGuess = pickLetter();
+			//pick different letter randomly
+			computerGuess = pickLetter();
 
-		reset();
+			reset();
+		}
+
+		if(numGuessLeft === 0){
+		  ++numLose;
+		  loseDisplay.textContent = numLose;
+
+		  reset();
+		}
+
+	} else {
+		console.log("please type only lowercase letters!");
 	}
-
-	if(numGuessLeft === 0){
-	  ++numLose;
-	  loseDisplay.textContent = numLose;
-
-	  reset();
-	}
-
-} else {
-	console.log("please type only lowercase letters!");
-}
 
 };
 
